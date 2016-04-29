@@ -24,10 +24,11 @@ namespace SQLConnection
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 connectionString = "";
-                if (string.IsNullOrEmpty(txtBoxSQLSeverName.Text))
+                if (string.IsNullOrEmpty(txtBoxSQLSeverName.Text) && !string.IsNullOrEmpty(txtDBName.Text) && string.IsNullOrEmpty(txtBoxUserName.Text) && string.IsNullOrEmpty(txtBoxPassword.Text))
                 {
                     string path = "Databases/";
                     DirectoryInfo directory = new DirectoryInfo(path);
@@ -50,10 +51,9 @@ namespace SQLConnection
                         new MainMenu(connectionString).Show();
                     }
                 }
-                else
+                else if (!string.IsNullOrEmpty(txtBoxSQLSeverName.Text) && !string.IsNullOrEmpty(txtDBName.Text) && !string.IsNullOrEmpty(txtBoxUserName.Text) && !string.IsNullOrEmpty(txtBoxPassword.Text))
                 {
-
-                    connectionString = "server=" + txtBoxSQLSeverName.Text + "; userid=" + txtBoxUserName.Text + "; password=" + txtBoxPassword.Text + "; database=" + txtDBName.Text + ";";
+                    connectionString = "server=" + txtBoxSQLSeverName.Text + "; userid=" + txtBoxUserName.Text + "; password=" + txtBoxPassword.Text + "; database=" + txtDBName.Text + ";" + "Convert Zero Datetime = True";
                     dh = new DataHelper(connectionString);
                     if (dh.OpenConnectionToMySQLDB() == true)
                     {
@@ -62,6 +62,10 @@ namespace SQLConnection
                         new MainMenu(connectionString).Show();
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Error: with login");
+                }
             }
             catch (Exception ex)
             {
@@ -69,6 +73,11 @@ namespace SQLConnection
                 MessageBox.Show(ex.ToString());
                 this.Show();
             }
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("If you want to connect to an SQLite database you just need to type in the database name into the database text box and make sure all other text boxes have nothing inputted." + Environment.NewLine + "If you want to connect to a MySQL database then textboxes need to have value that is equal to your login details.");
         }
     }
 }

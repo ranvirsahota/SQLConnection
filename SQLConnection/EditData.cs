@@ -18,7 +18,8 @@ namespace SQLConnection
         private DataHelper dh;
         private DataTable dt;
         private bool btnBackClicked = false;
-
+        private bool newRow = false;
+        private string id = "";
         public editData(string connectionString)
         {
             InitializeComponent();
@@ -44,16 +45,16 @@ namespace SQLConnection
 
         private void dataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            string id = dataGrid.CurrentRow.Cells[0].Value.ToString();
             string currentColumn = dataGrid.CurrentCell.OwningColumn.HeaderText;
             string value = dataGrid.CurrentCell.Value.ToString();
             if (!string.IsNullOrEmpty(value))
             {
-                if (string.IsNullOrEmpty(id))
+                if (newRow)
                 {
 
                     dh.ExecuteQuery("INSERT INTO `" + comboBoxTableSelectedValue + "`(`" + currentColumn + "`) VALUES('" + value + "');");
                     dataGrid.CurrentRow.Cells[0].Value = dataGrid.CurrentRow.Index + 1;
+                    newRow = false;
                 }
                 else
                 {
@@ -72,7 +73,7 @@ namespace SQLConnection
             if (!string.IsNullOrEmpty(comboBoxTableSelectedValue))
             {
                 dataGrid.DataSource = dh.ExecuteReturnQuery("SELECT * FROM " + comboBoxTableSelectedValue).DefaultView;
-                if (comboBoxTableSelectedValue.Contains("tblj") || comboBoxTableSelectedValue.Contains("view") || string.Equals(comboBoxTableSelectedValue, "tblIUCR"))
+                if (comboBoxTableSelectedValue.Contains("view") || string.Equals(comboBoxTableSelectedValue, "tblIUCR"))
                 {
                     dataGrid.ReadOnly = true;
                     dataGrid.AllowUserToAddRows = false;
@@ -95,14 +96,21 @@ namespace SQLConnection
         private void btnSearch_Click(object sender, EventArgs e)
         {
             string id = txtBoxID.Text;
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(comboBoxTableSelectedValue))
             {
-                dataGrid.DataSource = dh.ExecuteReturnQuery("SELECT * FROM `" + comboBoxTableSelectedValue + "` WHERE `" + firstColumn + "`='" + txtBoxID.Text + "';").DefaultView;
-                dataGrid.AllowUserToAddRows = false;
+                if (!string.IsNullOrEmpty(id))
+                {
+                    dataGrid.DataSource = dh.ExecuteReturnQuery("SELECT * FROM `" + comboBoxTableSelectedValue + "` WHERE `" + firstColumn + "`='" + txtBoxID.Text + "';").DefaultView;
+                    dataGrid.AllowUserToAddRows = false;
+                }
+                else
+                {
+                    MessageBox.Show("No value was enterd into the text box");
+                }
             }
             else
             {
-                MessageBox.Show("No value is entered");
+                MessageBox.Show("No table is selected");
             }
         }
 
@@ -119,6 +127,18 @@ namespace SQLConnection
             if (!btnBackClicked)
             {
                 Application.Exit();
+            }
+        }
+
+        private void dataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (dataGrid.CurrentRow.IsNewRow)
+            {
+                newRow = true;
+            }
+            else
+            {
+                id = dataGrid.CurrentRow.Cells[0].Value.ToString();
             }
         }
     }

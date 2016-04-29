@@ -19,6 +19,7 @@ namespace SQLConnection
         {
             InitializeComponent();
             this.connectionString = connectionString;
+            btnBackClicked = false;
         }
 
         private void radioBtnEditData_CheckedChanged(object sender, EventArgs e)
@@ -44,12 +45,12 @@ namespace SQLConnection
 
         private void MainMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (!btnBackClicked)
+            if (btnBackClicked)
             {
                 Application.Exit();
             }
         }
-        /*
+ /*
 private void btnChange_Click(object sender, EventArgs e)
 {
   string extractactedConnectionString = "";

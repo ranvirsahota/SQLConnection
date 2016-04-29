@@ -52,6 +52,10 @@ namespace SQLConnection
                     MessageBox.Show("Error executing query" + Environment.NewLine + ex.ToString());
                     return false;
                 }
+                finally
+                {
+
+                }
             }
             else
             {

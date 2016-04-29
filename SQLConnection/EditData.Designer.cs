@@ -41,6 +41,7 @@
             // 
             // dataGrid
             // 
+            this.dataGrid.AllowUserToDeleteRows = false;
             this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -51,6 +52,7 @@
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.Size = new System.Drawing.Size(475, 210);
             this.dataGrid.TabIndex = 0;
+            this.dataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGrid_CellBeginEdit);
             this.dataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellEndEdit);
             // 
             // comboBoxTable
@@ -123,6 +125,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(515, 314);
             this.Name = "editData";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Alter Data";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.editData_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();

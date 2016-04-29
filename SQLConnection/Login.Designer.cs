@@ -38,6 +38,7 @@
             this.txtBoxPassword = new System.Windows.Forms.TextBox();
             this.btnContinue = new System.Windows.Forms.Button();
             this.txtDBName = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -115,12 +116,23 @@
             this.txtDBName.Size = new System.Drawing.Size(184, 20);
             this.txtDBName.TabIndex = 2;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(283, 123);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(32, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "?";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(327, 150);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.txtDBName);
             this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.txtBoxPassword);
@@ -133,7 +145,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(343, 241);
             this.Name = "Login";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.ResumeLayout(false);
@@ -152,5 +163,6 @@
         private System.Windows.Forms.TextBox txtBoxPassword;
         private System.Windows.Forms.Button btnContinue;
         private System.Windows.Forms.TextBox txtDBName;
+        private System.Windows.Forms.Button button1;
     }
 }
